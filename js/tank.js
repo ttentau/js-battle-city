@@ -1,6 +1,5 @@
 class Tank {
     constructor(tank, step, gameWidth) {
-        console.log(11)
         this.tank = tank
         this.tankWidth = tank.width()
         this.step = step
@@ -121,8 +120,5 @@ class Tank {
         this.timer = null
     }
 
-    $(v) {
-        return jQuery(v)
-    }
 
 }

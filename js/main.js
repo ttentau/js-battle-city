@@ -21,10 +21,12 @@ class Game {
     init() {
         this.calculateHeightAndWidth()
 
+        //初始化tank
         this.tank = new Tank(this.myTank, 6, this.gameWidth)
 
         this.addEventListener()
 
+        //每秒生成一个tank，取20个
         Rx.Observable.interval(1000).take(20).subscribe(x => {
             let div = $('<div class="my-tank"></div>')
             div.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
@@ -54,6 +56,7 @@ class Game {
         })
     }
 
+    //添加键盘监听事件
     addEventListener() {
         let keydown = Rx.Observable.fromEvent(document.querySelector('body'), 'keydown')
         //如果是方向键就不限制时间
@@ -86,6 +89,7 @@ class Game {
         Rx.Observable.fromEvent(document.querySelector('body'), 'keyup').subscribe(() => this.tank.stop())
     }
 
+    //计算各元素的宽和高
     calculateHeightAndWidth() {
         //计算game框的长和宽
         this.game.css({'width': this.height - this.tankWidth + 'px', 'height': this.height - this.tankWidth + 'px'})
@@ -106,5 +110,4 @@ class Game {
     }
 }
 
-let game = new Game()
-game.init()
+new Game().init()
