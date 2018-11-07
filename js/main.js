@@ -1,3 +1,5 @@
+// import Rx from 'rxjs/Rx';
+
 let myTank = $('#my_tank')
 let body = $('body')
 let bg = $('.bg')
@@ -12,37 +14,46 @@ console.log('width', width)
 myTank.css({'width': step + 'px', 'height': step + 'px'})
 
 
-// container.append('<div class="my-tank"></div>')
-
-for (let i = 0; i < 5; i++) {
-    setTimeout(() => {
-        let div = $('<div class="my-tank"></div>')
-        let direction = Math.floor(Math.random() * (5 - 1)) + 1
-        let heightDistance = Math.floor(Math.random() * (10 - 1)) + 1
-        let widthDistance = Math.floor(Math.random() * (width / step - 1)) + 1
-        switch (direction) {
-            case 1:
-                div.css({'top': heightDistance * step + 'px'})
-                div.css({'left': widthDistance * step + 'px'})
-                break
-            case 2:
-                div.css({'top': heightDistance * step + 'px'})
-                div.css({'left': widthDistance * step + 'px'})
-                break
-            case 3:
-                div.css({'top': heightDistance * step + 'px'})
-                div.css({'left': widthDistance * step + 'px'})
-                break
-            case 4:
-                div.css({'top': heightDistance * step + 'px'})
-                div.css({'left': widthDistance * step + 'px'})
-                break
+const evenNumbers = Rx.Observable.create(function (observer) {
+    let value = 0
+    const interval = setInterval(() => {
+        if (value < 21) {
+            observer.next(value)
         }
+        value++
+    }, 300)
 
-        container.append(div)
-    }, 1000)
+    return () => clearInterval(interval)
+})
+// 输出: 0...2...4...6...8
 
-}
+// evenNumbers.subscribe(val => {
+//     let div = $('<div class="my-tank"></div>')
+//     let direction = Math.floor(Math.random() * (5 - 1)) + 1
+//     let heightDistance = Math.floor(Math.random() * (10 - 1)) + 1
+//     let widthDistance = Math.floor(Math.random() * (width / step - 1)) + 1
+//     switch (direction) {
+//         case 1:
+//             div.css({'top': heightDistance * step + 'px'})
+//             div.css({'left': widthDistance * step + 'px'})
+//             break
+//         case 2:
+//             div.css({'top': heightDistance * step + 'px'})
+//             div.css({'left': widthDistance * step + 'px'})
+//             break
+//         case 3:
+//             div.css({'top': heightDistance * step + 'px'})
+//             div.css({'left': widthDistance * step + 'px'})
+//             break
+//         case 4:
+//             div.css({'top': heightDistance * step + 'px'})
+//             div.css({'left': widthDistance * step + 'px'})
+//             break
+//     }
+//
+//     container.append(div)
+// });
+
 
 $('body').on('keydown', function (e) {
     let keyCode = e.originalEvent.keyCode
@@ -85,6 +96,21 @@ $('body').on('keydown', function (e) {
                 myTank.css({'left': next + 'px'})
             }
             break
+        case 32:
+            let bullet = $('#my_bullet1')
+            let bullertTop = step / 2 - bullet.height() / 2
+            let bullertLeft = step / 2 - bullet.width() / 2
+            bullet.css({'top': bullertTop + 'px'})
+            bullet.css({'left': bullertTop + 'px'})
+            setInterval(() => {
+                bullertTop += step
+                if (bullertTop < height) {
+                    bullet.css({'top': bullertTop + 'px'})
+                    bullet.css({'left': bullertLeft + 'px'})
+                }
+
+            }, 100)
+            break
     }
 })
 
@@ -95,6 +121,7 @@ function calculateHeightAndWidth() {
     bg.css({'width': width + 'px', 'height': height + 'px'})
     container.css({'width': width + 'px', 'height': height + 'px'})
 }
+
 
 
 

@@ -17,9 +17,16 @@ body{
   height: 100px;
   background: #000;
 }
+.my-bullet{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+}
 .tank{
     position: absolute;
     width: 100px;
     height: 100px;
     background: #000;
 }
+
