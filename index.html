@@ -26,12 +26,19 @@
 <!-- Add your site or application content here -->
 <div class="bg" id="bg">
     <div class="container">
-        <div class="my-tank" id="my_tank">
-
+        <div class="topbar"></div>
+        <div style="overflow: hidden;">
+            <div class="leftbar"></div>
+            <div class="game">
+                <div class="my-tank" id="my_tank">
+                    <img src="./img/my_tank_top.png" alt="">
+                </div>
+                <div class="my-bullet" id="my_bullet1"></div>
+            </div>
+            <div class="rigthbar"></div>
         </div>
-        <div class="my-bullet" id="my_bullet1"></div>
+        <div class="bottombar"></div>
     </div>
-
 </div>
 
 
@@ -43,6 +50,7 @@
         crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
 <script src="js/plugins.js"></script>
+<script src="js/tank.js"></script>
 <script src="js/main.js"></script>
 </body>
 

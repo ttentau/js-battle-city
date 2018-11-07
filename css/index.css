@@ -1,29 +1,50 @@
-body{
-  background: #000;
+body {
+    background: #000;
 }
-.bg{
-  /*position: absolute;*/
-  background: red;
-  margin: 0 auto;
+
+.bg {
+    background: black;
 }
-.container{
-  width: 100%;
-  height: 100%;
-  position: absolute;
+
+.container {
+    margin: 0 auto;
 }
-.my-tank{
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background: #000;
+
+.leftbar, .topbar, .rigthbar, .bottombar {
+    /*position: absolute;*/
+    background: #999999;
 }
-.my-bullet{
+
+.leftbar, .game, .rigthbar {
+    float: left;
+}
+
+.game {
+    background: #222;
+    position: relative;
+}
+
+.my-tank {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    /*background: url("../img/my_tank_top.png");*/
+    /*background-position: 90px 140px;*/
+}
+
+.my-tank img {
+    width: 100%;
+    height: 100%;
+}
+
+.my-bullet {
     position: absolute;
     width: 20px;
     height: 20px;
     background: #fff;
 }
-.tank{
+
+.tank {
     position: absolute;
     width: 100px;
     height: 100px;
