@@ -97,19 +97,26 @@ $('body').on('keydown', function (e) {
             }
             break
         case 32:
+            console.log('空格')
+
             let bullet = $('#my_bullet1')
+            bullet.show()
             let bullertTop = step / 2 - bullet.height() / 2
             let bullertLeft = step / 2 - bullet.width() / 2
-            bullet.css({'top': bullertTop + 'px'})
-            bullet.css({'left': bullertTop + 'px'})
-            setInterval(() => {
-                bullertTop += step
-                if (bullertTop < height) {
+            bullet.css({'top': bullertTop + myTank.position().top + 'px'})
+            bullet.css({'left': bullertTop + myTank.position().left + 'px'})
+          let interval =   setInterval(() => {
+                bullertTop = bullet.position().top - step
+                console.log(bullertTop)
+                if (bullertTop < height && bullertTop > 0) {
                     bullet.css({'top': bullertTop + 'px'})
-                    bullet.css({'left': bullertLeft + 'px'})
+                    // bullet.css({'left': bullertLeft + 'px'})
+                }else {
+                    bullet.hide()
+                    clearInterval(interval)
                 }
 
-            }, 100)
+            }, 500)
             break
     }
 })
