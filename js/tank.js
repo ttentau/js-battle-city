@@ -1,10 +1,11 @@
 class Tank {
     constructor(tank, step, gameWidth) {
+        console.log(11)
         this.tank = tank
         this.tankWidth = tank.width()
         this.step = step
         this.gameWidth = gameWidth
-        this.direction = 0
+        this.direction = 1
         this.timer = null
         this.bulletCount = 0
     }
@@ -13,8 +14,8 @@ class Tank {
         this.direction = direction
         if (!this.timer) {
             this.timer = setInterval(() => {
-                let currentTop = myTank.position().top
-                let currentLeft = myTank.position().left
+                let currentTop = this.tank.position().top
+                let currentLeft = this.tank.position().left
                 switch (this.direction) {
                     case 0:
                         //右
@@ -70,7 +71,7 @@ class Tank {
                     //右
                     if (currentLeft < this.gameWidth) {
                         let next = currentLeft + 10
-                        console.log(next)
+                        // console.log(next)
                         bullet.css({'left': next + 'px'})
                     }
                     else {
@@ -82,7 +83,7 @@ class Tank {
                     //上
                     if (currentTop > 0) {
                         let next = currentTop - 10
-                        console.log(next)
+                        // console.log(next)
                         bullet.css({'top': next + 'px'})
                     } else {
                         bullet.remove()
@@ -93,7 +94,7 @@ class Tank {
                     //左
                     if (currentLeft > 0) {
                         let next = currentLeft - 10
-                        console.log(next)
+                        // console.log(next)
                         bullet.css({'left': next + 'px'})
                     } else {
                         bullet.remove()
@@ -104,7 +105,7 @@ class Tank {
                     //下
                     if (currentTop < this.gameWidth) {
                         let next = currentTop + 10
-                        console.log(next)
+                        // console.log(next)
                         bullet.css({'top': next + 'px'})
                     } else {
                         bullet.remove()

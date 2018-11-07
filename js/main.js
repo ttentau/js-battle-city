@@ -1,109 +1,110 @@
-// import Rx from 'rxjs/Rx';
 
-let myTank = $('#my_tank')
-let body = $('body')
-let bg = $('.bg')
-let container = $('.container')
-let leftbar = $('.leftbar')
-let topbar = $('.topbar')
-let rigthbar = $('.rigthbar')
-let bottombar = $('.bottombar')
-let game = $('.game')
+class Game {
+    constructor() {
+        this.myTank = $('#my_tank')
+        this.body = $('body')
+        this.bg = $('.bg')
+        this.container = $('.container')
+        this.leftbar = $('.leftbar')
+        this.topbar = $('.topbar')
+        this.rigthbar = $('.rigthbar')
+        this.bottombar = $('.bottombar')
+        this.game = $('.game')
 
-let height = body.height()
-let width = body.width()
-let tankWidth = height / 14
-let gameWidth = height - tankWidth
-
-calculateHeightAndWidth()
-
-
-// const evenNumbers = Rx.Observable.create(function (observer) {
-//     let value = 0
-//     const interval = setInterval(() => {
-//         if (value < 21) {
-//             observer.next(value)
-//         }
-//         value++
-//     }, 300)
-//
-//     return () => clearInterval(interval)
-// })
-// 输出: 0...2...4...6...8
-
-// evenNumbers.subscribe(val => {
-//     let div = $('<div class="my-tank"></div>')
-//     let direction = Math.floor(Math.random() * (5 - 1)) + 1
-//     let heightDistance = Math.floor(Math.random() * (10 - 1)) + 1
-//     let widthDistance = Math.floor(Math.random() * (width / tankWidth - 1)) + 1
-//     switch (direction) {
-//         case 1:
-//             div.css({'top': heightDistance * tankWidth + 'px'})
-//             div.css({'left': widthDistance * tankWidth + 'px'})
-//             break
-//         case 2:
-//             div.css({'top': heightDistance * tankWidth + 'px'})
-//             div.css({'left': widthDistance * tankWidth + 'px'})
-//             break
-//         case 3:
-//             div.css({'top': heightDistance * tankWidth + 'px'})
-//             div.css({'left': widthDistance * tankWidth + 'px'})
-//             break
-//         case 4:
-//             div.css({'top': heightDistance * tankWidth + 'px'})
-//             div.css({'left': widthDistance * tankWidth + 'px'})
-//             break
-//     }
-//
-//     container.append(div)
-// });
-
-let tank = new Tank(myTank, 6, gameWidth)
-$('body').on('keyup', function (e) {
-    tank.stop()
-})
-$('body').on('keydown', function (e) {
-    let keyCode = e.originalEvent.keyCode
-    console.log(keyCode)
-    switch (keyCode) {
-        //左
-        case 37:
-            tank.go(2)
-            break
-        //上
-        case 38:
-            tank.go(1)
-            break
-        //右
-        case 39:
-            tank.go(0)
-            break
-        //下
-        case 40:
-            tank.go(3)
-            break
-        case 32:
-            tank.shoot(game)
-            break
+        this.height = this.body.height()
+        this.width = this.body.width()
+        this.tankWidth = this.height / 14
+        this.gameWidth = this.height - this.tankWidth
+        this.tank = null
     }
-})
 
-function calculateHeightAndWidth() {
-    //计算game框的长和宽
-    game.css({'width': height - tankWidth + 'px', 'height': height - tankWidth + 'px'})
-    //计算container内各个边框的长和宽
-    leftbar.css({'width': tankWidth + 'px', 'height': height - tankWidth + 'px'})
-    topbar.css({'width': height + tankWidth * 2 + 'px', 'height': tankWidth * 0.6 + 'px'})
-    rigthbar.css({'width': tankWidth + tankWidth + 'px', 'height': height - tankWidth + 'px'})
-    bottombar.css({'width': height + tankWidth * 2 + 'px', 'height': tankWidth * 0.4 + 'px'})
+    init() {
+        this.calculateHeightAndWidth()
 
-    container.css({'width': height + tankWidth * 2 + 'px', 'height': height + 'px'})
-    //设置坦克长宽
-    myTank.css({'width': tankWidth + 'px', 'height': tankWidth + 'px'})
-    myTank.css({'left': tankWidth * 5 + 'px'})
-    myTank.css({'top': tankWidth * 12 + 'px'})
+        this.tank = new Tank(this.myTank, 6, this.gameWidth)
+
+        this.addEventListener()
+
+        Rx.Observable.interval(1000).take(20).subscribe(x => {
+            let div = $('<div class="my-tank"></div>')
+            div.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
+            let direction = Math.floor(Math.random() * (5 - 1)) + 1
+            let heightDistance = Math.floor(Math.random() * (14 - 1))
+            let widthDistance = Math.floor(Math.random() * (14 - 1))
+            switch (direction) {
+                case 1:
+                    div.css({'top': heightDistance * this.tankWidth + 'px'})
+                    div.css({'left': widthDistance * this.tankWidth + 'px'})
+                    break
+                case 2:
+                    div.css({'top': heightDistance * this.tankWidth + 'px'})
+                    div.css({'left': widthDistance * this.tankWidth + 'px'})
+                    break
+                case 3:
+                    div.css({'top': heightDistance * this.tankWidth + 'px'})
+                    div.css({'left': widthDistance * this.tankWidth + 'px'})
+                    break
+                case 4:
+                    div.css({'top': heightDistance * this.tankWidth + 'px'})
+                    div.css({'left': widthDistance * this.tankWidth + 'px'})
+                    break
+            }
+
+            this.game.append(div)
+        })
+    }
+
+    addEventListener() {
+        let keydown = Rx.Observable.fromEvent(document.querySelector('body'), 'keydown')
+        //如果是方向键就不限制时间
+        let dec = keydown.filter(e => e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
+        //如果是发射键就限制时间
+        let space = keydown.filter(e => e.keyCode == 32).throttleTime(500)
+        dec.subscribe(e => {
+            switch (e.keyCode) {
+                //左
+                case 37:
+                    this.tank.go(2)
+                    break
+                //上
+                case 38:
+                    this.tank.go(1)
+                    break
+                //右
+                case 39:
+                    this.tank.go(0)
+                    break
+                //下
+                case 40:
+                    this.tank.go(3)
+                    break
+            }
+        })
+        space.subscribe(e => this.tank.shoot(this.game))
+
+
+        Rx.Observable.fromEvent(document.querySelector('body'), 'keyup').subscribe(() => this.tank.stop())
+    }
+
+    calculateHeightAndWidth() {
+        //计算game框的长和宽
+        this.game.css({'width': this.height - this.tankWidth + 'px', 'height': this.height - this.tankWidth + 'px'})
+        //计算container内各个边框的长和宽
+        this.leftbar.css({'width': this.tankWidth + 'px', 'height': this.height - this.tankWidth + 'px'})
+        this.topbar.css({'width': this.height + this.tankWidth * 2 + 'px', 'height': this.tankWidth * 0.6 + 'px'})
+        this.rigthbar.css({
+            'width': this.tankWidth + this.tankWidth + 'px',
+            'height': this.height - this.tankWidth + 'px'
+        })
+        this.bottombar.css({'width': this.height + this.tankWidth * 2 + 'px', 'height': this.tankWidth * 0.4 + 'px'})
+
+        this.container.css({'width': this.height + this.tankWidth * 2 + 'px', 'height': this.height + 'px'})
+        //设置坦克长宽
+        this.myTank.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
+        this.myTank.css({'left': this.tankWidth * 5 + 'px'})
+        this.myTank.css({'top': this.tankWidth * 12 + 'px'})
+    }
 }
 
-
-
-
+let game = new Game()
+game.init()

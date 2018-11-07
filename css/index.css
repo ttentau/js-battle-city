@@ -28,6 +28,7 @@ body {
     position: absolute;
     width: 100px;
     height: 100px;
+    background: #fff;
     /*background: url("../img/my_tank_top.png");*/
     /*background-position: 90px 140px;*/
 }
