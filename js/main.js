@@ -1,3 +1,31 @@
+let mapData = [
+    //0代表空白，1代表32*32的砖块，2代表32*16的砖块，后面类推
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, 36, -1, 36, -1, 36, -1, 36, -1, 36, -1, 36, -1],
+    [-1, 36, -1, 36, -1, 36, -1, 36, -1, 36, -1, 36, -1],
+    [-1, 36, -1, 36, -1, 36, 2 - 1, 36, -1, 36, -1, 36, -1],
+    [-1, 36, -1, 36, -1, 23, -1, 23, -1, 36, -1, 36, -1],
+    [-1, -1, -1, -1, -1, 36, -1, 36, -1, -1, -1, -1, -1],
+    [33, -1, 33, 33, -1, 23, -1, 23, -1, 33, 33, -1, 33],
+    [8, -1, 23, 23, -1, 33, -1, 33, -1, 23, 23, -1, 8],
+    [-1, 36, -1, 36, -1, 36, 33, 36, -1, 36, -1, 36, -1],
+    [-1, 36, -1, 36, -1, 36, 23, 36, -1, 36, -1, 36, -1],
+    [-1, 36, -1, 36, -1, 36, -1, 36, -1, 36, -1, 36, -1],
+    [-1, 36, -1, 36, -1, 26, 32, 24, -1, 36, -1, 36, -1],
+    [-1, -1, -1, -1, -1, 25, 1, 25, -1, -1, -1, -1, -1]
+]
+
+class console {
+    static log(...args) {
+        if (args.length == 2) {
+            window.console.log(args[0],'--->',args[1])
+        }else {
+            window.console.log(args[0])
+        }
+    }
+}
+
+console.log()
 
 class Game {
     constructor() {
@@ -27,32 +55,72 @@ class Game {
         this.addEventListener()
 
         //每秒生成一个tank，取20个
-        Rx.Observable.interval(1000).take(20).subscribe(x => {
-            let div = $('<div class="my-tank"></div>')
-            div.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
-            let direction = Math.floor(Math.random() * (5 - 1)) + 1
-            let heightDistance = Math.floor(Math.random() * (14 - 1))
-            let widthDistance = Math.floor(Math.random() * (14 - 1))
-            switch (direction) {
-                case 1:
-                    div.css({'top': heightDistance * this.tankWidth + 'px'})
-                    div.css({'left': widthDistance * this.tankWidth + 'px'})
-                    break
-                case 2:
-                    div.css({'top': heightDistance * this.tankWidth + 'px'})
-                    div.css({'left': widthDistance * this.tankWidth + 'px'})
-                    break
-                case 3:
-                    div.css({'top': heightDistance * this.tankWidth + 'px'})
-                    div.css({'left': widthDistance * this.tankWidth + 'px'})
-                    break
-                case 4:
-                    div.css({'top': heightDistance * this.tankWidth + 'px'})
-                    div.css({'left': widthDistance * this.tankWidth + 'px'})
-                    break
-            }
+        // Rx.Observable.interval(1000).take(20).subscribe(x => {
+        //     let div = $('<div class="my-tank"></div>')
+        //     div.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
+        //     let direction = Math.floor(Math.random() * (5 - 1)) + 1
+        //     let heightDistance = Math.floor(Math.random() * (14 - 1))
+        //     let widthDistance = Math.floor(Math.random() * (14 - 1))
+        //     switch (direction) {
+        //         case 1:
+        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
+        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
+        //             break
+        //         case 2:
+        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
+        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
+        //             break
+        //         case 3:
+        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
+        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
+        //             break
+        //         case 4:
+        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
+        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
+        //             break
+        //     }
+        //
+        //     this.game.append(div)
+        // })
 
-            this.game.append(div)
+        this.drawMap()
+    }
+
+    drawMap() {
+
+        let thingImgRx = Rx.Observable.create(ob => {
+                let thingImg = new Image()
+                thingImg.src = './img/thing.png'
+                thingImg.onload = () => {
+                    let thingImgWidth = this.tankWidth / thingImg.height * thingImg.width
+                    ob.next(thingImgWidth)
+                }
+            }
+        )
+        thingImgRx.subscribe(thingImgWidth => {
+            // console.log(thingImgWidth)
+            mapData.forEach((row, rowIndex, rowArray) => {
+                row.forEach((column, columnIndex, columnArray) => {
+                    // console.log(column)
+                    if (column != -1) {
+                        let think = $(`<div class="thing"><div class="img"></div></div>`)
+                        // console.log(think)
+                        let img = think.children()
+                        // console.log(rem)
+                        // console.log(img)
+                        think.css({
+                            'left': columnIndex * this.tankWidth + 'px',
+                            'top': rowIndex * this.tankWidth + 'px',
+                        })
+                        img.css({
+                            'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px',
+                            'background-size': thingImgWidth + 'px ' + this.tankWidth + 'px',
+                            'background-position': 100 / 36 * column + 0.0 + '%'
+                        })
+                        this.game.append(think)
+                    }
+                })
+            })
         })
     }
 
@@ -105,7 +173,7 @@ class Game {
         this.container.css({'width': this.height + this.tankWidth * 2 + 'px', 'height': this.height + 'px'})
         //设置坦克长宽
         this.myTank.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
-        this.myTank.css({'left': this.tankWidth * 5 + 'px'})
+        this.myTank.css({'left': this.tankWidth * 4 + 'px'})
         this.myTank.css({'top': this.tankWidth * 12 + 'px'})
     }
 }

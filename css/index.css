@@ -33,6 +33,22 @@ body {
     /*background-position: 90px 140px;*/
 }
 
+.thing {
+    position: absolute;
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*background: gold;*/
+}
+
+.thing .img {
+    /*width: 100px;*/
+    /*height: 100px;*/
+    background: url("../img/thing.png");
+    /*background-repeat: no-repeat;*/
+    /*background-size: 2378px 100px;*/
+    /*background-position: 100%;*/
+}
+
 .my-tank img {
     width: 100%;
     height: 100%;
