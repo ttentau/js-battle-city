@@ -88,6 +88,8 @@ class Tank {
                             let next = currentLeft - this.step
                             this.tank.css({'left': next + 'px'})
                         } else {
+
+
                             this.tank.css({'left': 0 + 'px'})
                         }
                         break
