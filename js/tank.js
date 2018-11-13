@@ -7,8 +7,6 @@ class Tank {
         this.direction = 1
         this.timer = null
 
-
-
         this.bulletCount = 0
     }
 
