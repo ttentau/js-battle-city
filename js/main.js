@@ -54,34 +54,34 @@ class Game {
 
         this.addEventListener()
 
-        //每秒生成一个tank，取20个
-        // Rx.Observable.interval(1000).take(20).subscribe(x => {
-        //     let div = $('<div class="my-tank"></div>')
-        //     div.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
-        //     let direction = Math.floor(Math.random() * (5 - 1)) + 1
-        //     let heightDistance = Math.floor(Math.random() * (14 - 1))
-        //     let widthDistance = Math.floor(Math.random() * (14 - 1))
-        //     switch (direction) {
-        //         case 1:
-        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
-        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
-        //             break
-        //         case 2:
-        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
-        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
-        //             break
-        //         case 3:
-        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
-        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
-        //             break
-        //         case 4:
-        //             div.css({'top': heightDistance * this.tankWidth + 'px'})
-        //             div.css({'left': widthDistance * this.tankWidth + 'px'})
-        //             break
-        //     }
-        //
-        //     this.game.append(div)
-        // })
+       // // 每秒生成一个tank，取20个
+       //  Rx.Observable.interval(1000).take(20).subscribe(x => {
+       //      let div = $('<div class="my-tank"></div>')
+       //      div.css({'width': this.tankWidth + 'px', 'height': this.tankWidth + 'px'})
+       //      let direction = Math.floor(Math.random() * (5 - 1)) + 1
+       //      let heightDistance = Math.floor(Math.random() * (14 - 1))
+       //      let widthDistance = Math.floor(Math.random() * (14 - 1))
+       //      switch (direction) {
+       //          case 1:
+       //              div.css({'top': heightDistance * this.tankWidth + 'px'})
+       //              div.css({'left': widthDistance * this.tankWidth + 'px'})
+       //              break
+       //          case 2:
+       //              div.css({'top': heightDistance * this.tankWidth + 'px'})
+       //              div.css({'left': widthDistance * this.tankWidth + 'px'})
+       //              break
+       //          case 3:
+       //              div.css({'top': heightDistance * this.tankWidth + 'px'})
+       //              div.css({'left': widthDistance * this.tankWidth + 'px'})
+       //              break
+       //          case 4:
+       //              div.css({'top': heightDistance * this.tankWidth + 'px'})
+       //              div.css({'left': widthDistance * this.tankWidth + 'px'})
+       //              break
+       //      }
+       //
+       //      this.game.append(div)
+       //  })
 
         this.drawMap()
     }
